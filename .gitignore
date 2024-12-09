@@ -1,53 +1,92 @@
-# Python bytecode and cache
-*.pyc
-*.pyo
+# Byte-compiled Python files
 __pycache__/
+*.py[cod]
 
-# Build directories
-build/
-dist/
-
-# Metadata from setuptools
-*.egg-info/
-
-# Cython and compiled extensions
-*.so
+# C extensions
 *.pyd
 
-# Temporary files
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.mocha.json
+*.sonar.*
+
+# Translations
+*.mo
+
+# Django stuff:
 *.log
+*.pot
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Coverage
+*.lcov
+
+# Static files
+staticfiles/
+
+# Temporary files
 *.tmp
+*.temp
 
-# Virtual environments
-env/
-venv/
+# Project-specific directories and files
+/temp.*-*
+/Release/
+/biosed/_cpp/*.exp
+/biosed/_cpp/*.lib
+/biosed/_cpp/*.obj
+/BioSED_logo_white.png
+biosed.egg-info/
 
-# IDE specific files (optional, depending on your setup)
-.idea/
+# IDE / Editor files
 .vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
 
-# OS-specific files
-.DS_Store
-Thumbs.db
-
-# Ignore platform-specific intermediate build artifacts
-temp.win32-*/
-temp.win-amd64-*/
-
-# Prebuilt shared libraries or object files from C++
-*.o
-*.obj
-*.dll
-*.lib
-*.exe
-
-# Exclude specific subdirectories in build/
-build/lib.win32-*/
-build/lib.win-amd64-*/
-
-# Packaging
-*.wheel
-*.whl
-
-# Other temporary directories/files
-biosed/__pycache__/
+# Ignore existing .gitignore file for customization
+!.gitignore
