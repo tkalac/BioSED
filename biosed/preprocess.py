@@ -66,8 +66,6 @@ def find_beam_centers(sed_data,
     else:
         return compute_centers_of_mass(sed_data, direct_beam_threshold)
 
-    return compute_centers_of_mass(sed_data, direct_beam_threshold)
-
 
 def get_scan_shape(beam_centers, scan_limits = None):
     """
