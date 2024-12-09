@@ -1,0 +1,53 @@
+# Python bytecode and cache
+*.pyc
+*.pyo
+__pycache__/
+
+# Build directories
+build/
+dist/
+
+# Metadata from setuptools
+*.egg-info/
+
+# Cython and compiled extensions
+*.so
+*.pyd
+
+# Temporary files
+*.log
+*.tmp
+
+# Virtual environments
+env/
+venv/
+
+# IDE specific files (optional, depending on your setup)
+.idea/
+.vscode/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore platform-specific intermediate build artifacts
+temp.win32-*/
+temp.win-amd64-*/
+
+# Prebuilt shared libraries or object files from C++
+*.o
+*.obj
+*.dll
+*.lib
+*.exe
+
+# Exclude specific subdirectories in build/
+build/lib.win32-*/
+build/lib.win-amd64-*/
+
+# Packaging
+*.wheel
+*.whl
+
+# Other temporary directories/files
+biosed/__pycache__/
