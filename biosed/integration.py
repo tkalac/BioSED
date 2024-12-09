@@ -56,24 +56,24 @@ def crown_integration(sed_data,
     >>> plt.plot(data_phi_vals, data_azi_intensities[0])
     """
 
-    # The image array is linearized so the c++ extension can work with it.
-    # It is reshaped again in the return statement.
-    data_shape = sed_data.shape
-    sed_data = sed_data.reshape((-1, *data_shape[-2:]))
-
-    format_shape = FormatDataShape(sed_data.shape[:-2])
-    sed_data = format_shape.to_1D(sed_data)
-
     # Sanity checks
-    if (len(data_shape) < 3):
+    if (sed_data.ndim < 3):
         raise Exception("""The data should be a 3D or 4D array, corresponding
             to the shape (image_indicies, QY, QX)""")
+        
+    # The image array is linearized so the c++ extension can work with it.
+    # It is reshaped again in the return statement.
+    format_shape = FormatDataShape(sed_data.shape[:-2])
+    sed_data = format_shape.to_1D(sed_data)
 
     # The centers of each bin is returned
     phi_bin_edges = np.linspace(0, 360, n_phi_bins + 1)
     phi_vals = np.array([0.5*(phi_bin_edges[i] + phi_bin_edges[i+1]) for i in range(n_phi_bins)])
 
-    azi_intensities = compute_crown_integral(sed_data, n_phi_bins, q_range, q_callibration)
+    if isinstance(sed_data, np.ma.MaskedArray):
+        azi_intensities = compute_crown_integral(sed_data.data, n_phi_bins, q_range, q_callibration)
+    else:
+        azi_intensities = compute_crown_integral(sed_data, n_phi_bins, q_range, q_callibration)
 
     return format_shape.to_2D(azi_intensities), phi_vals
     

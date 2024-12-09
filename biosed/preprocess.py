@@ -60,6 +60,12 @@ def find_beam_centers(sed_data,
     >>> data_beamCenters = find_beam_centers(data, threshold = 150)
     >>> print(data_beamCenters)
     """
+
+    if isinstance(sed_data, np.ma.MaskedArray):
+        return compute_centers_of_mass(sed_data.data, direct_beam_threshold)
+    else:
+        return compute_centers_of_mass(sed_data, direct_beam_threshold)
+
     return compute_centers_of_mass(sed_data, direct_beam_threshold)
 
 
@@ -201,7 +207,11 @@ def center_images(sed_data, beam_centers,
 
     trimmed_data = np.zeros((sed_data.shape[0],
                              trimmed_edge_width,
-                             trimmed_edge_width))     
+                             trimmed_edge_width))
+
+    trimmed_data_mask = np.zeros((sed_data.shape[0],
+                             trimmed_edge_width,
+                             trimmed_edge_width), dtype = "bool")     
     
     # Trimmed data
     for image_index, img in enumerate(sed_data):
@@ -217,7 +227,11 @@ def center_images(sed_data, beam_centers,
         trim_QY_upper = beam_center_QY + trimming_radius +1
         trim_QY_lower = beam_center_QY - trimming_radius
         
-        trimmed_data[image_index] = img[trim_QY_lower:trim_QY_upper, trim_QX_lower:trim_QX_upper]
+        trimmed_data[image_index] = img[trim_QY_lower:trim_QY_upper,
+                                        trim_QX_lower:trim_QX_upper].data
 
-    return format_data_shape.to_2D(trimmed_data)
+        trimmed_data_mask[image_index] = img[trim_QY_lower:trim_QY_upper,
+                                             trim_QX_lower:trim_QX_upper].mask
+
+    return format_data_shape.to_2D(np.ma.masked_array(trimmed_data, trimmed_data_mask).astype("int16"))
     

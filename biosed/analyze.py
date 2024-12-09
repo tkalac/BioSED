@@ -25,6 +25,7 @@ class AnalysisPipeline:
     def __init__(self):
         # Data
         self.data = None
+        self.data_masked = None
         self.beam_centers = None
         self.valid_frames = None
         self.scan_shape = None
@@ -52,7 +53,7 @@ class AnalysisPipeline:
 
         # Step 2: Mask data
         print("Masking data...")
-        masking.mask_data(self.data)
+        self.data = masking.mask_data(self.data)  # Set invalid pixels to -1 and return masked array
         print("...done!\n")
 
         # Step 2: Find beam centers:
@@ -68,13 +69,14 @@ class AnalysisPipeline:
 
         # Step 4: Get stack of valid frames
         print("Determining scan shape...")
-        self.data_valid_frames = self.data[self.valid_frames]#.reshape(self.scan_shape)
+        self.data_valid_frames = self.data[self.valid_frames]
         self.beam_centers_valid = self.beam_centers[self.valid_frames]
         print("...done!\n")
 
         # Step 5: Trim the data
         print("Trimming data...")
-        self.data_centered = preprocess.center_images(self.data_valid_frames, self.beam_centers_valid)
+        self.data_centered = preprocess.center_images(self.data_valid_frames,
+                                                      self.beam_centers_valid)
         print("...done!\n")
 
         # Step 6: Integrate
