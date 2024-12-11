@@ -1,0 +1,92 @@
+# Byte-compiled Python files
+__pycache__/
+*.py[cod]
+
+# C extensions
+*.pyd
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+# Usually these files are written by a python script from a template
+# before PyInstaller builds the exe, so as to inject date/other infos into it.
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+nosetests.xml
+coverage.xml
+*.mocha.json
+*.sonar.*
+
+# Translations
+*.mo
+
+# Django stuff:
+*.log
+*.pot
+
+# Scrapy stuff:
+.scrapy
+
+# Sphinx documentation
+docs/_build/
+
+# PyBuilder
+target/
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Coverage
+*.lcov
+
+# Static files
+staticfiles/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Project-specific directories and files
+/temp.*-*
+/Release/
+/biosed/_cpp/*.exp
+/biosed/_cpp/*.lib
+/biosed/_cpp/*.obj
+/BioSED_logo_white.png
+biosed.egg-info/
+
+# IDE / Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Ignore existing .gitignore file for customization
+!.gitignore
