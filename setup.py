@@ -67,7 +67,7 @@ reqs = [
 # Package setup
 setup(
     name="biosed",
-    version="0.1.0",
+    version="0.1.1",
     author="Tine Kalac",
     author_email="tine.kalac@mmk.su.se",
     description="A utility package for processing SED data to study biomaterials.",
@@ -83,6 +83,6 @@ setup(
         "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.6",
+    python_requires=">=3.8",
     install_requires=reqs,
 )
