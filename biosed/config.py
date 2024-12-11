@@ -69,7 +69,6 @@ class Config:
 
             "orientation_plot_norm": Normalize(vmin=0, vmax=np.pi),
             "orientation_plot_cmap": cm.romaO,
-            "orientation_plot_origin": "upper",
             "orientation_plot_aspect": "equal",
 
             "orientation_offset": 0.5 * np.pi, # valid for cellulose
