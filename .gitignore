@@ -79,7 +79,6 @@ staticfiles/
 /biosed/_cpp/*.exp
 /biosed/_cpp/*.lib
 /biosed/_cpp/*.obj
-/BioSED_logo_white.png
 biosed.egg-info/
 
 # IDE / Editor files
