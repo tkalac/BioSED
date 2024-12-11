@@ -32,7 +32,6 @@ except ImportError:
 
 from pybind11.setup_helpers import Pybind11Extension, build_ext
 
-
 # C++ extensions
 ext_modules = [
     # Center of mass extension
@@ -52,7 +51,6 @@ ext_modules = [
     ),
 ]
 
-
 # Package requirements
 reqs = [
     "numpy",       # Specify minimum version if needed
@@ -62,7 +60,6 @@ reqs = [
     "opencv-python",
     "h5py",
 ],
-
 
 # Package setup
 setup(
