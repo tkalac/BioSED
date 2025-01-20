@@ -199,3 +199,76 @@ def harmonic_analysis(azi_intensities, phi):
     orientation = (-0.5 * phase) %np.pi
     
     return format_shape.to_2D(orientation)
+
+
+def find_principal_components(sed_data,
+    q_range = config.get("integration.q_range"),
+    q_callibration = config.get("integration.q_callibration")):
+
+
+    # Formatting
+    format_shape = FormatDataShape(sed_data.shape[:-2])
+    sed_data = format_shape.to_1D(sed_data)
+
+    # Make the meshgrid  
+    n_images, nQY, nQX = sed_data.shape
+    det_axis = np.linspace(- q_callibration * nQY/2, q_callibration * nQY/2, nQY)
+
+    QY, QX = np.meshgrid(det_axis, det_axis, indexing = "ij")
+
+    # Flatten qy and qz
+    QY_flat = QY.ravel()
+    QX_flat = QX.ravel()
+
+    # Initialize result arrays
+    orientation = np.zeros(n_images)
+    anisotropy = np.zeros(n_images)
+    aspect_ratio = np.zeros(n_images)
+
+    for i in range(n_images):
+        I = np.ma.copy(sed_data[i])
+        mask_i = I.mask
+
+        pca_mask = np.copy(mask_i).ravel()
+        pca_mask[np.sqrt(QY_flat**2 + QX_flat**2) < q_range[0]] = True
+        pca_mask[np.sqrt(QY_flat**2 + QX_flat**2) > q_range[1]] = True
+
+        # Mask I, qy, and qz
+        I.mask = pca_mask
+        I_masked = I.compressed()
+        QY_masked = np.ma.array(QY_flat, mask=pca_mask.ravel()).compressed()
+        QX_masked = np.ma.array(QX_flat, mask=pca_mask.ravel()).compressed()
+
+        # Compute mean and centered arrays
+        total_intensity = np.sum(I_masked)
+        QY_mean = np.sum(I_masked * QY_masked) / total_intensity
+        QX_mean = np.sum(I_masked * QX_masked) / total_intensity
+        
+        QY_centered = QY_masked - QY_mean
+        QX_centered = QX_masked - QX_mean
+
+        # Calculate and construct covariance matrix
+        cov_YY = np.sum(I_masked * QY_centered**2) / total_intensity
+        cov_XX = np.sum(I_masked * QX_centered**2) / total_intensity
+        cov_YX = np.sum(I_masked * QY_centered * QX_centered) / total_intensity
+        
+        C = np.array([[cov_YY, cov_YX], [cov_YX, cov_XX]])
+        
+        # Get eigenvalues
+        eigenvalues, eigenvectors = np.linalg.eigh(C)
+        
+        # Sort eigenvalues and eigenvectors (in descending order)
+        idx = eigenvalues.argsort()[::-1]
+        eigenvalues = eigenvalues[idx]
+        eigenvectors = eigenvectors[:, idx]
+        
+        # Calculate structure orientation angle
+        orientation[i] = np.arctan2(eigenvectors[0, 0], eigenvectors[1, 0]) % np.pi
+        
+        # Calculate anisotropy parameter
+        anisotropy[i] = (eigenvalues[0] - eigenvalues[1]) / np.sum(eigenvalues)
+        
+        # Calculate aspect ratio
+        aspect_ratio[i] = np.sqrt(eigenvalues[0] / eigenvalues[1])
+    
+    return format_shape.to_2D(orientation), format_shape.to_2D(anisotropy), format_shape.to_2D(aspect_ratio)

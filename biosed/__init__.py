@@ -20,7 +20,7 @@ from .io import load_data, save_to_hdf5, load_from_hdf5
 from .preprocess import find_beam_centers, get_scan_shape, center_images
 from .integration import crown_integration
 from .masking import mask_data
-from .orientation import poisson_odf, fit_poisson_odf, find_orientation_peaks, harmonic_analysis
+from .orientation import poisson_odf, fit_poisson_odf, find_orientation_peaks, harmonic_analysis, find_principal_components
 from .visualize import detector_plot, plot_orientation
 from .analyze import AnalysisPipeline
 
